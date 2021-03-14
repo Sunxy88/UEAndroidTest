@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">UEAndroidProjet</string>
+    <string name="jump_collecter">Jump to collect information</string>
+    <string name="jump_counter">Jump to click counter</string>
+    <string name="surname">Surname</string>
+    <string name="surname_enter">Enter your surname</string>
+    <string name="name">Given name</string>
+    <string name="name_enter">Enter your given name</string>
+    <string name="birthday">Birthday</string>
+    <string name="birthdayForm">yyyy/mm/dd</string>
+    <string name="city_of_birth">City of birth</string>
+    <string name="city_of_birth_enter">Enter your city of birth</string>
+    <string name="tel">Tel</string>
+    <string name="addTel">Enter your phone number</string>
+    <string name="add">Add</string>
+    <string name="department">Department</string>
+    <string name="submit">Submit</string>
+    <string name="reset_action">Reset</string>
+    <string name="jump_photo">Jump to take photo</string>
+    <string name="jump_question">Jump to ask question</string>
+    <string name="enter_question">Enter your question</string>
+    <string name="ask">ASK</string>
+    <string name="search">search</string>
+    <string name="empty_string">Empty string</string>
+    <string name="share">Share</string>
+    <string name="my_birthcity_is">My birthcity is </string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="pickDateActivity">pickDateActivity</string>
+    <string name="ACTION_SEND" translatable="false">android.intent.action.PICK</string>
+    <string name="ACTION_VIEW" translatable="false">android.intent.action.VIEW</string>
+    <string name="print_name">Print Name</string>
+    <string name="toChoose">Choose</string>
+    <string name="answer">Answer</string>
+    <string name="jump_fragment">Jumpt to fragment test</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
