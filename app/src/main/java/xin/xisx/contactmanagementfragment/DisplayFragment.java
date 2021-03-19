@@ -10,6 +10,8 @@ import android.widget.TextView;
 public class DisplayFragment extends Fragment {
 
     private static final String ARG_PARAM = "info";
+    private TextView tvDisplayName;
+
     protected String info;
 
     public static DisplayFragment newInstance(String param) {
@@ -39,7 +41,7 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView tvDisplayName = (TextView)view.findViewById (R.id.fragment_display_tv) ;
+        tvDisplayName = (TextView)view.findViewById (R.id.fragment_display_tv) ;
 
         if ((tvDisplayName != null) && (info != null)) {
             tvDisplayName.setText(info);

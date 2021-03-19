@@ -58,6 +58,13 @@ public class EditInformationFragment extends Fragment {
             activiy.onGivennameConfirmed(givenname);
         });
 
-        etBirthday.setOnClickListener(v -> activiy.onClickBirthday());
+        etBirthday.setOnClickListener(v -> {
+            String originalBirthday = etBirthday.getText().toString();
+            activiy.onClickBirthday(originalBirthday);
+        });
+    }
+
+    public void displayDate(String date) {
+        etBirthday.setText(date);
     }
 }

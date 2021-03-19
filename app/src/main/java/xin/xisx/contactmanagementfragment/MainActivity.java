@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity implements IEdit {
     private FragmentManager fragmentManager;
     private EditInformationFragment editInformationFragment;
     private DisplayFragment displayFragment;
+    private DatePickFragment datePickFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,36 @@ public class MainActivity extends AppCompatActivity implements IEdit {
     }
 
     @Override
-    public void onClickBirthday() {
+    public void onClickBirthday(String original) {
+        if (datePickFragment == null) {
+            datePickFragment =  DatePickFragment.getInstance(original);
+        }
+        if (datePickFragment.isAdded()) {
+            fragmentManager.beginTransaction()
+                    .show(datePickFragment)
+                    .hide(editInformationFragment)
+                    .commit();
+        } else {
+            fragmentManager.beginTransaction()
+                    .add(R.id.rootLayout, datePickFragment)
+                    .show(datePickFragment)
+                    .hide(editInformationFragment)
+                    .commit();
+        }
+    }
 
+    @Override
+    public void onBirthdayConfirmed(String birthday) {
+        editInformationFragment.displayDate(birthday);
+        fragmentManager.beginTransaction()
+                .show(editInformationFragment)
+                .hide(datePickFragment)
+                .commit();
     }
 
     private void replace(String info) {
         displayFragment = DisplayFragment.newInstance(info);
+
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, displayFragment)
                 .addToBackStack(editInformationFragment.getClass().toString())
