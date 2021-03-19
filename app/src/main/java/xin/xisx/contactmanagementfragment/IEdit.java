@@ -1,8 +1,10 @@
 package xin.xisx.contactmanagementfragment;
 
-public interface IEditName {
+public interface IEdit {
 
     void onSurnameConfirmed(String surname);
 
     void onGivennameConfirmed(String givenname);
+
+    void onClickBirthday();
 }
