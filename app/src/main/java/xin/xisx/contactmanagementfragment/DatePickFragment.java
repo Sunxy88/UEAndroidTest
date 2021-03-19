@@ -31,6 +31,7 @@ public class DatePickFragment extends Fragment {
 
     public static DatePickFragment getInstance(String original) {
         DatePickFragment datePickFragment = new DatePickFragment();
+        datePickFragment.setOriginalDate(original);
         Bundle args = new Bundle();
 
         args.putString(ORIGINAL, original);
@@ -74,13 +75,17 @@ public class DatePickFragment extends Fragment {
         });
 
         cancelBtn.setOnClickListener(v -> cbk.onBirthdayConfirmed(originalDate));
-
+        date.performClick();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = getActivity();
+    }
+
+    public void setOriginalDate(String originalDate) {
+        this.originalDate = originalDate;
     }
 
     private void showDatePickerDialog() {

@@ -6,7 +6,7 @@ public interface IEdit {
 
     void onGivennameConfirmed(String givenname);
 
-    void onClickBirthday(String original);
+    void onClickBirthday(String surname, String givenname, String original);
 
     void onBirthdayConfirmed(String birthday);
 }

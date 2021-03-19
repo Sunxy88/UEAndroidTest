@@ -9,24 +9,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 public class EditInformationFragment extends Fragment {
 
+    private static final String GIVEN_NAME_KEY = "givennamekey";
+    private static final String SURNAME_KEY = "surnamekey";
+    private static final String BIRTHDAY_KEY = "birthday";
+
     private IEdit activiy;
+
+    private View rootView;
 
     private EditText etSurname;
     private Button btnSurnameConfirm;
     private EditText etGivenname;
     private Button btnGivennameConfirm;
-    private EditText etBirthday;
+    private TextView etBirthday;
 
+    public static EditInformationFragment getInstance() {
+        EditInformationFragment instance = new EditInformationFragment();
+        return instance;
+    }
+
+    public static EditInformationFragment getInstance(String surname, String givenname, String birthday) {
+        EditInformationFragment instance = new EditInformationFragment();
+        Bundle args = new Bundle();
+
+        args.putString(SURNAME_KEY, surname);
+        args.putString(GIVEN_NAME_KEY, givenname);
+        args.putString(BIRTHDAY_KEY, birthday);
+        instance.setArguments(args);
+
+        return instance;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_information, container, false);
+        rootView = inflater.inflate(R.layout.fragment_edit_information, container, false);
+
+        etSurname = rootView.findViewById(R.id.surname);
+        etGivenname = rootView.findViewById(R.id.name);
+        btnSurnameConfirm = rootView.findViewById(R.id.frag_et_surname_confirm);
+        btnGivennameConfirm = rootView.findViewById(R.id.frag_et_givenname_confirm);
+        etBirthday = rootView.findViewById(R.id.birthday);
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            String surname = arguments.getString(SURNAME_KEY);
+            String givenname = arguments.getString(GIVEN_NAME_KEY);
+            String birthday = arguments.getString(BIRTHDAY_KEY);
+            etSurname.setText(surname);
+            etGivenname.setText(givenname);
+            etBirthday.setText(birthday);
+        }
+        return rootView;
     }
 
     @Override
@@ -42,11 +82,6 @@ public class EditInformationFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        etSurname = view.findViewById(R.id.surname);
-        etGivenname = view.findViewById(R.id.name);
-        btnSurnameConfirm = view.findViewById(R.id.frag_et_surname_confirm);
-        btnGivennameConfirm = view.findViewById(R.id.frag_et_givenname_confirm);
-        etBirthday = view.findViewById(R.id.birthday);
 
         btnSurnameConfirm.setOnClickListener(v -> {
             String surname = etSurname.getText().toString();
@@ -58,13 +93,28 @@ public class EditInformationFragment extends Fragment {
             activiy.onGivennameConfirmed(givenname);
         });
 
-        etBirthday.setOnClickListener(v -> {
-            String originalBirthday = etBirthday.getText().toString();
-            activiy.onClickBirthday(originalBirthday);
+        etBirthday.setOnClickListener(v -> birthdayCallBack());
+        etBirthday.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                birthdayCallBack();
+            }
         });
     }
 
-    public void displayDate(String date) {
-        etBirthday.setText(date);
+    public EditText getEtSurname() {
+        return etSurname;
+    }
+
+    public EditText getEtGivenname() {
+        return etGivenname;
+    }
+
+    public TextView getEtBirthday() {
+        return etBirthday;
+    }
+
+    private void birthdayCallBack() {
+        String originalBirthday = etBirthday.getText().toString();
+        activiy.onClickBirthday(etSurname.getText().toString(), etGivenname.getText().toString(), originalBirthday);
     }
 }
