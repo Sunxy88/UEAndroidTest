@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EditInformationFragment extends Fragment {
 
@@ -46,9 +49,13 @@ public class EditInformationFragment extends Fragment {
     private TextView etBirthday;
     private ImageView photoImageView;
     private Button btnPhoto;
+    private EditText addTel;
+    private Button btnAddTel;
+    private LinearLayout telList;
 
     private String currentPhotoPath;
     private Uri photoUri;
+    private Set<String> telNumbers = new HashSet<>();
 
     public static EditInformationFragment getInstance() {
         EditInformationFragment instance = new EditInformationFragment();
@@ -92,6 +99,9 @@ public class EditInformationFragment extends Fragment {
         etBirthday = rootView.findViewById(R.id.birthday);
         photoImageView = rootView.findViewById(R.id.photo_image);
         btnPhoto = rootView.findViewById(R.id.btnPhoto);
+        addTel = rootView.findViewById(R.id.addTel);
+        telList = rootView.findViewById(R.id.telList);
+        btnAddTel = rootView.findViewById(R.id.addTelBtn);
 
         return rootView;
     }
@@ -161,6 +171,8 @@ public class EditInformationFragment extends Fragment {
 
         btnPhoto.setOnClickListener(v -> dispatchTakePicutreIntent());
 
+        btnAddTel.setOnClickListener(v -> addTel());
+
         photoImageView.setImageDrawable(getResources().getDrawable(R.drawable.start_image));
 
         if (photoUri == null) {
@@ -204,6 +216,50 @@ public class EditInformationFragment extends Fragment {
             }
             galleryAddPic();
         }
+    }
+
+    public void addTel() {
+        String tel = addTel.getText().toString();
+        if (telNumbers.contains(tel)) {
+            addTel.setText("");
+        }
+        if (emptyStringCheck(tel)) {
+            return ;
+        }
+        telNumbers.add(tel);
+        addTelInList(tel);
+    }
+
+    private void addTelInList(String tel) {
+        Activity activity = getActivity();
+        LinearLayout telll = new LinearLayout(activity);
+        TextView telTV = new TextView(activity);
+        telTV.setText(tel);
+        Button remove = new Button(activity);
+        remove.setHint("Remove");
+        remove.setOnClickListener((v) ->  {
+            telll.removeAllViews();
+            telNumbers.remove(tel);
+        });
+        Button call = new Button(activity);
+        call.setHint("Call");
+        call.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri data = Uri.parse("tel:" + tel);
+            intent.setData(data);
+            startActivity(intent);
+        });
+        telll.addView(telTV);
+        telll.addView(remove);
+        telll.addView(call);
+        telList.addView(telll);
+    }
+
+    private boolean emptyStringCheck(String str) {
+        if (str == null || str.length() == 0) {
+            return true;
+        }
+        return false;
     }
 
     private void birthdayCallBack() {

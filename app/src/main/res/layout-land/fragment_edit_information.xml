@@ -173,6 +173,50 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/telLayout"
+        android:layout_width="411dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/departmentLayout">
+
+        <TextView
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:text="@string/tel" />
+
+        <EditText
+            android:id="@+id/addTel"
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/addTel"
+            android:phoneNumber="true"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/addTelBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/telList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/telLayout">
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
@@ -183,7 +227,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/photoLayout" />
+        app:layout_constraintTop_toBottomOf="@id/telList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
