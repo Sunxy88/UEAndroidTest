@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements IEdit {
 
     private static final String PREFERENCE = "memory";
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements IEdit {
     private EditInformationFragment editInformationFragment;
     private DisplayFragment displayFragment;
     private DatePickFragment datePickFragment;
+
+    private Map<String, String> cache = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements IEdit {
 
     @Override
     public void onClickBirthday(String surname, String givenname, String original) {
+        cache.put(SURNAME_KEY, editInformationFragment.getEtSurname().getText().toString());
+        cache.put(GIVEN_NAME_KEY, editInformationFragment.getEtGivenname().getText().toString());
+        cache.put(BIRTHDAY_KEY, editInformationFragment.getEtBirthday().getText().toString());
+        cache.put(URI_KEY, editInformationFragment.getCurrentPhotoPath());
         datePickFragment = DatePickFragment.getInstance(original);
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, datePickFragment)
@@ -69,6 +78,13 @@ public class MainActivity extends AppCompatActivity implements IEdit {
 
     @Override
     public void onBirthdayConfirmed(String birthday) {
+        cache.put(BIRTHDAY_KEY, birthday);
+        editInformationFragment = EditInformationFragment.getInstance(
+                cache.get(SURNAME_KEY),
+                cache.get(GIVEN_NAME_KEY),
+                cache.get(BIRTHDAY_KEY),
+                cache.get(URI_KEY)
+        );
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, editInformationFragment)
                 .commit();
