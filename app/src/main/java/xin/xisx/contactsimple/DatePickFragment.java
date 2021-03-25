@@ -1,4 +1,4 @@
-package xin.xisx.contactmanagementfragment;
+package xin.xisx.contactsimple;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -64,6 +64,7 @@ public class DatePickFragment extends Fragment {
         cancelBtn = view.findViewById(R.id.date_cancel_btn);
 
 
+        date.setText(originalDate);
         date.setOnClickListener(v -> showDatePickerDialog());
 
         final IEdit cbk = (IEdit) activity;

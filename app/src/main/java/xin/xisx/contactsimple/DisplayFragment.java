@@ -1,4 +1,4 @@
-package xin.xisx.contactmanagementfragment;
+package xin.xisx.contactsimple;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -41,7 +41,7 @@ public class DisplayFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        tvDisplayName = (TextView)view.findViewById (R.id.fragment_display_tv) ;
+        tvDisplayName = view.findViewById (R.id.fragment_display_tv) ;
 
         if ((tvDisplayName != null) && (info != null)) {
             tvDisplayName.setText(info);

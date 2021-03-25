@@ -1,69 +1,47 @@
-package xin.xisx.contactmanagementfragment;
+package xin.xisx.contactsimple;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements IEdit {
+
+    private static final String PREFERENCE = "memory";
 
     private static final String GIVEN_NAME_KEY = "givennamekey";
     private static final String SURNAME_KEY = "surnamekey";
     private static final String BIRTHDAY_KEY = "birthday";
+    private static final String URI_KEY = "uri";
 
+    private SharedPreferences sharedPreferences;
     private FragmentManager fragmentManager;
     private EditInformationFragment editInformationFragment;
     private DisplayFragment displayFragment;
     private DatePickFragment datePickFragment;
-
-    private Map<String, String> cache = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getFragmentManager();
+        sharedPreferences = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         initFragment(savedInstanceState);
     }
 
     @Override
     protected void onStop() {
+        saveData();
         super.onStop();
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState,
-                                    @NonNull PersistableBundle outPersistentState) {
-        cache.put(SURNAME_KEY, editInformationFragment.getEtSurname().getText().toString());
-        cache.put(GIVEN_NAME_KEY, editInformationFragment.getEtGivenname().getText().toString());
-        cache.put(BIRTHDAY_KEY, editInformationFragment.getEtBirthday().getText().toString());
-        outState.putString(SURNAME_KEY, cache.get(SURNAME_KEY));
-        outState.putString(GIVEN_NAME_KEY, cache.get(GIVEN_NAME_KEY));
-        outState.putString(BIRTHDAY_KEY, cache.get(BIRTHDAY_KEY));
-        super.onSaveInstanceState(outState, outPersistentState);
-
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        cache.put(SURNAME_KEY, savedInstanceState.getString(SURNAME_KEY));
-        cache.put(GIVEN_NAME_KEY, savedInstanceState.getString(GIVEN_NAME_KEY));
-        cache.put(BIRTHDAY_KEY, savedInstanceState.getString(BIRTHDAY_KEY));
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        editInformationFragment = EditInformationFragment.getInstance(cache.get(SURNAME_KEY), cache.get(GIVEN_NAME_KEY), cache.get(BIRTHDAY_KEY));
-        fragmentManager.beginTransaction()
-                .replace(R.id.rootLayout, editInformationFragment)
-                .commit();
-        super.onResume();
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        saveData();
     }
 
     @Override
@@ -82,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements IEdit {
 
     @Override
     public void onClickBirthday(String surname, String givenname, String original) {
-        cache.put(GIVEN_NAME_KEY, givenname);
-        cache.put(SURNAME_KEY, surname);
         datePickFragment = DatePickFragment.getInstance(original);
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, datePickFragment)
@@ -93,15 +69,27 @@ public class MainActivity extends AppCompatActivity implements IEdit {
 
     @Override
     public void onBirthdayConfirmed(String birthday) {
-        editInformationFragment = EditInformationFragment.getInstance(cache.get(SURNAME_KEY), cache.get(GIVEN_NAME_KEY), birthday);
-        cache.put(BIRTHDAY_KEY, birthday);
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, editInformationFragment)
                 .commit();
     }
 
+    private void saveData() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SURNAME_KEY, editInformationFragment.getEtSurname().getText().toString());
+        editor.putString(GIVEN_NAME_KEY, editInformationFragment.getEtGivenname().getText().toString());
+        editor.putString(BIRTHDAY_KEY, editInformationFragment.getEtBirthday().getText().toString());
+//        editor.putString(URI_KEY, editInformationFragment.getPhotoUri().getPath());
+        editor.putString(URI_KEY, editInformationFragment.getCurrentPhotoPath());
+        editor.apply();
+    }
+
     private void initFragment(Bundle savedInstanceState) {
-        editInformationFragment = EditInformationFragment.getInstance();
+        String surname = sharedPreferences.getString(SURNAME_KEY, null);
+        String givenname = sharedPreferences.getString(GIVEN_NAME_KEY, null);
+        String birthday = sharedPreferences.getString(BIRTHDAY_KEY, null);
+        String uri = sharedPreferences.getString(URI_KEY, null);
+        editInformationFragment = EditInformationFragment.getInstance(surname, givenname, birthday, uri);
         fragmentManager.beginTransaction()
                 .replace(R.id.rootLayout, editInformationFragment)
                 .commit();

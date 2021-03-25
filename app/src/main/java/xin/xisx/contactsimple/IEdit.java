@@ -1,4 +1,4 @@
-package xin.xisx.contactmanagementfragment;
+package xin.xisx.contactsimple;
 
 public interface IEdit {
 
