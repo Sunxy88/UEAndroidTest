@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">UEandroid</string>
+    <string name="jump_collecter">Enregistrer les informations</string>
+    <string name="jump_counter">Compteur de click</string>
+    <string name="surname">Nom</string>
+    <string name="surname_enter">Entrer votre nom</string>
+    <string name="name">Prénom</string>
+    <string name="name_enter">Entrer votre prénom</string>
+    <string name="birthday">Anniversaire</string>
+    <string name="birthdayForm">aaaa/mm/jj</string>
+    <string name="city_of_birth">Ville de naissance</string>
+    <string name="city_of_birth_enter">Entrer votre ville de naissance</string>
+    <string name="tel">Numéro Tel</string>
+    <string name="addTel">Votre numéro de téléphone</string>
+    <string name="add">Ajouter</string>
+    <string name="department">Département</string>
+    <string name="submit">Valider</string>
+    <string name="reset_action">Réinitialiser</string>
+    <string name="jump_photo">Prendre des photos</string>
+    <string name="jump_question">Demander une question</string>
+    <string name="enter_question">Entrer votre question</string>
+    <string name="ask">Demander</string>
+    <string name="search">Rechercher</string>
+    <string name="empty_string">Un champs vide</string>
+    <string name="share">Partager</string>
+    <string name="my_birthcity_is">Ma viile de nassaince est</string>
+    <string name="confirm">Valider</string>
+    <string name="cancel">Annuler</string>
+    <string name="pickDateActivity">pickDateActivity</string>
+    <string name="print_name">Afficher le nom</string>
+    <string name="toChoose">À choisir</string>
+    <string name="answer">Répondre</string>
+    <string name="jump_fragment">Fragment test</string>
+    <string name="take_photo">Prendre une photo</string>
+</resources>

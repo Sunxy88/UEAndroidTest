@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Android开发</string>
+    <string name="jump_collecter">收集信息</string>
+    <string name="jump_counter">点击计数器</string>
+    <string name="surname">姓</string>
+    <string name="surname_enter">输入您的姓氏</string>
+    <string name="name">名</string>
+    <string name="name_enter">输入您的名字e</string>
+    <string name="birthday">生日</string>
+    <string name="birthdayForm">yyyy/mm/dd</string>
+    <string name="city_of_birth">出生城市</string>
+    <string name="city_of_birth_enter">输入您的出生城市</string>
+    <string name="tel">电话</string>
+    <string name="addTel">输入您的电话号码</string>
+    <string name="add">添加</string>
+    <string name="department">省份</string>
+    <string name="submit">提交</string>
+    <string name="reset_action">重置</string>
+    <string name="jump_photo">前往拍摄照片</string>
+    <string name="jump_question">前往提问</string>
+    <string name="enter_question">输入您的问题</string>
+    <string name="ask">提问</string>
+    <string name="search">搜索</string>
+    <string name="empty_string">必填项为空</string>
+    <string name="share">分享</string>
+    <string name="my_birthcity_is">我的生日是</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="pickDateActivity">pickDateActivity</string>
+    <string name="print_name">显示名字</string>
+    <string name="toChoose">选择</string>
+    <string name="answer">回答</string>
+    <string name="jump_fragment">片段测试</string>
+    <string name="take_photo">拍摄照片</string>
+</resources>

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -136,19 +137,16 @@ public class EditInformationFragment extends Fragment {
                 etBirthday.setText(birthday);
             }
             if (stringUri != null) {
-                Log.i("URIString", stringUri);
-                photoUri = new Uri.Builder()
-                        .scheme("content")
-                        .authority("xin.xisx.contactsimple")
-                        .encodedPath("/x" + stringUri.substring(stringUri.lastIndexOf('/')))
-                        .build();
-                Log.i("URI", photoUri.toString());
-//                photoImageView.setImageBitmap(BitmapFactory.decodeFile(stringUri));
-                try {
-                    photoImageView.setImageBitmap(MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                currentPhotoPath = stringUri;
+                Log.i("stringUri", stringUri);
+                Bitmap bitmap = BitmapFactory.decodeFile(stringUri);
+                photoImageView.setImageBitmap(bitmap);
+                photoUri = FileProvider.getUriForFile(aty,
+                        "xin.xisx.contactsimple",
+                        new File(stringUri));
+                Log.i("photoUri", photoUri.toString());
+            } else {
+                photoImageView.setImageDrawable(getResources().getDrawable(R.drawable.start_image));
             }
         }
 
@@ -172,12 +170,6 @@ public class EditInformationFragment extends Fragment {
         btnPhoto.setOnClickListener(v -> dispatchTakePicutreIntent());
 
         btnAddTel.setOnClickListener(v -> addTel());
-
-        photoImageView.setImageDrawable(getResources().getDrawable(R.drawable.start_image));
-
-        if (photoUri == null) {
-            photoImageView.setImageDrawable(getResources().getDrawable(R.drawable.start_image));
-        }
     }
 
     public EditText getEtSurname() {
@@ -305,7 +297,6 @@ public class EditInformationFragment extends Fragment {
         Log.i("FilePath", currentPhotoPath);
         return image;
     }
-
 
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
